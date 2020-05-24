@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
+[AddComponentMenu("Control Script/Fps Input")]
 public class FpsMovement : MonoBehaviour
 {
     public float speed = 5f;
