@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Shooter : MonoBehaviour
 {
@@ -9,20 +10,19 @@ public class Shooter : MonoBehaviour
     void Start()
     {
         cam = GetComponent<Camera>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible   = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
             Ray ray = cam.ScreenPointToRay(new Vector3(cam.pixelWidth/2, cam.pixelHeight/2, 0));
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit)) {
                 var target = hit.transform.gameObject.GetComponent<ReactiveTarget>();
                 if (target != null) {
                     target.ReactToHit();
+                    Messenger.Broadcast(GameEvent.ENEMY_HIT);
                 } else {
                     StartCoroutine(Sphere(hit.point));
                 }

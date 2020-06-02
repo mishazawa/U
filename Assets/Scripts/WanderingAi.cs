@@ -11,6 +11,11 @@ public class WanderingAi : MonoBehaviour
     [SerializeField]
     private GameObject fireballPrefab;
     private GameObject fireball;
+
+    public void OnSpeedChanged (float val) {
+        speed = 10f * val;
+    }
+
     void Start()
     {
         alive = true;
