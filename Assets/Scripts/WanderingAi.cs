@@ -13,7 +13,7 @@ public class WanderingAi : MonoBehaviour
     private GameObject fireball;
 
     public void OnSpeedChanged (float val) {
-        speed = 10f * val;
+        speed = 3f * val;
     }
 
     void Start()

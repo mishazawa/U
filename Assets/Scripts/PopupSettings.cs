@@ -14,7 +14,7 @@ public class PopupSettings : MonoBehaviour
         slider.value = PlayerPrefs.GetFloat("speed", 1);
     }
     public void OnSpeedValue (float val) {
-        PlayerPrefs.GetFloat("speed", val);
+        PlayerPrefs.SetFloat("speed", val);
         Messenger<float>.Broadcast(GameEvent.SPEED_CHANGED, val);
     }
 

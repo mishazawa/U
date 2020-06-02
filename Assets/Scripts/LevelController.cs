@@ -21,7 +21,7 @@ public class LevelController : MonoBehaviour
 
     private void OnSpeedChanged(float val) {
         speed = val;
-        enemy.GetComponent<WanderingAi>().OnSpeedChanged(speed);
+        if (enemy != null) enemy.GetComponent<WanderingAi>().OnSpeedChanged(speed);
     }
 
     // Update is called once per frame
