@@ -35,6 +35,12 @@ public class RelativeMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit) {
         contact = hit;
+
+        var body = hit.collider.attachedRigidbody;
+        if (body != null && !body.isKinematic) {
+            var horizontalVelocity = new Vector3(controller.velocity.x, 0, controller.velocity.z);
+            body.velocity = hit.moveDirection * horizontalVelocity.magnitude;
+        }
     }
 
     private Vector3 HandleMovement (Vector3 movement, float hor, float ver) {
