@@ -1,4 +1,4 @@
 ﻿public interface IGameManager {
   ManagerStatus status { get; }
-  void Startup();
+  void Startup(NetworkService service);
 }

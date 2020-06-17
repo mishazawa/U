@@ -5,25 +5,30 @@ using UnityEngine;
 
 [RequireComponent(typeof(InventoryManager))]
 [RequireComponent(typeof(PlayerManager))]
+[RequireComponent(typeof(WeatherManager))]
 public class Managers : MonoBehaviour {
-
     public static PlayerManager Player {get; private set;}
     public static InventoryManager Inventory {get; private set;}
+    public static WeatherManager Weather {get; private set;}
 
     private List<IGameManager> managers;
 
     void Awake () {
+
       Player = GetComponent<PlayerManager>();
       Inventory = GetComponent<InventoryManager>();
+      Weather = GetComponent<WeatherManager>();
 
-      managers = new List<IGameManager>() {Player, Inventory};
+      managers = new List<IGameManager>() {Player, Inventory, Weather};
 
       StartCoroutine(StartupManagers());
     }
 
     private IEnumerator StartupManagers () {
+      var network = new NetworkService();
+
       foreach (var manager in managers) {
-        manager.Startup();
+        manager.Startup(network);
       }
       yield return null;
 
