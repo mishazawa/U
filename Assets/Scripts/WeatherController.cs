@@ -7,28 +7,29 @@ public class WeatherController : MonoBehaviour {
     private Material sky;
     [SerializeField]
     private Light sun;
+    [SerializeField]
+    private float minimalIntensity = 0.1f;
 
     private float fullIntensity;
-    private float cloudValue;
-    private float direction = 1f;
-    // Start is called before the first frame update
-    void Start() {
+
+    void Awake () {
+      Messenger.AddListener(GameEvent.WEATHER_CHANGED, OnWeatherUpdate);
+    }
+
+    void OnDestroy () {
+      Messenger.RemoveListener(GameEvent.WEATHER_CHANGED, OnWeatherUpdate);
+    }
+
+    void Start () {
         fullIntensity = sun.intensity;
     }
 
-    // Update is called once per frame
-    void Update() {
-      cloudValue += 0.02f * direction;
-      if (cloudValue >= 1) {
-        direction = -1f;
-      } else if (cloudValue <= 0) {
-        direction = 1f;
-      }
-      SetOvercast(cloudValue);
+    void OnWeatherUpdate () {
+      SetOvercast(Managers.Weather.cloudiness);
     }
 
     void SetOvercast (float value) {
       sky.SetFloat("_Blend", value);
-      sun.intensity = fullIntensity + (fullIntensity * value);
+      sun.intensity = Mathf.Clamp(fullIntensity - (fullIntensity * value), minimalIntensity, 1f);
     }
 }

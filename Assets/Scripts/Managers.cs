@@ -6,10 +6,12 @@ using UnityEngine;
 [RequireComponent(typeof(InventoryManager))]
 [RequireComponent(typeof(PlayerManager))]
 [RequireComponent(typeof(WeatherManager))]
+[RequireComponent(typeof(ImagesManager))]
 public class Managers : MonoBehaviour {
     public static PlayerManager Player {get; private set;}
     public static InventoryManager Inventory {get; private set;}
     public static WeatherManager Weather {get; private set;}
+    public static ImagesManager Images {get; private set;}
 
     private List<IGameManager> managers;
 
@@ -18,8 +20,9 @@ public class Managers : MonoBehaviour {
       Player = GetComponent<PlayerManager>();
       Inventory = GetComponent<InventoryManager>();
       Weather = GetComponent<WeatherManager>();
+      Images = GetComponent<ImagesManager>();
 
-      managers = new List<IGameManager>() {Player, Inventory, Weather};
+      managers = new List<IGameManager>() {Player, Inventory, Weather, Images};
 
       StartCoroutine(StartupManagers());
     }
